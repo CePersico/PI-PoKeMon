@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const {Pokemon, Type} = require('../db');
 const axios = require('axios');
-const { getAllInfo} = require('../controllers/pokemon')
+const { getAllInfo} = require('../controllers/pokemon');
+const { v4: uuidv4 } = require('uuid');
 
 //   - [ ] __GET /pokemons__:
 //   - Obtener un listado de los pokemons desde pokeapi.
@@ -74,59 +75,85 @@ router.get("/:id", async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-  });  // verificado buscando de la API, los trae bien. Cuando funcione el POST chequeare los de la DB
-
+  });  // Funcionando con los ID de la API y DB
 
 // - [ ] __POST /pokemons__:
 //   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de pokemons por body
 //   - Crea un pokemon en la base de datos
 
+const clonePokemon = async (
+  name,
+  hp,
+  attack,
+  defense,
+  speed,
+  height,
+  weight,
+  image,
+  types,
+  createInDb
+) => {
+  try {
+    const id = uuidv4();
+    const cloneNewPoke = await Pokemon.create({
+      name: name,
+      createdInDb: createInDb,
+      hp: hp,
+      attack: attack,
+      defense: defense,
+      speed: speed,
+      height: height,
+      weight: weight,
+      image: image,
+      id: id
+    });
+
+    const typeDb = await Type.findAll({
+      where: { name: types },
+    });
+
+    await cloneNewPoke.addTypes(typeDb);
+    return cloneNewPoke;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 router.post("/", async (req, res, next) => {
-    const { 
-        name, 
-        hp, 
-        attack, 
-        defense, 
-        speed, 
-        height, 
-        weight, 
-        image, 
-        type 
-    } = req.body;
-    console.log(req.body);  // llega un objeto vacio!!
-    if (
-      isNaN(hp) || isNaN(attack) || isNaN(defense) || isNaN(speed) || isNaN(height) || isNaN(weight)
-    )
-      return res.json({ info: "hp, attack, defense, speed, heigth and weigth must be numbers" });
-  
-    if (!name) return res.json({ info: "The name is required" });
-  
-    const findPoke = await Pokemon.findOne({ where: { name: name } });
-    if (findPoke) return res.json({ info: "This Pokemon already exists" });
-  
-    try {
-      const pokeClone = await Pokemon.create({
-        name: name,
-        hp: hp||0,
-        attack: attack||0,
-        defense: defense||0,
-        speed: speed||0,
-        height: height||0,
-        weight: weight||0,
-        image: image|| 'https://static0.cbrimages.com/wordpress/wp-content/uploads/2020/05/pokemon-ft.jpg',
-      });
-  
-      const types = type.map(async (t) => {
-        const pokeForType = await Type.findByPk(e); 
-        pokeClone.addTypes(pokeForType); 
-      });
-  
-      await Promise.all(types);
-  
-      res.send("Pokemon created");
-    } catch (error) {
-         next(error);
-    }
-  });
+  const {
+    name,
+    createInDb,
+    hp,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+    image,
+    types,
+  } = req.body;
+
+  //res.json(req.body);
+
+  try {
+    const pokeMon = await clonePokemon(
+      name,
+      createInDb,
+      hp,
+      attack,
+      defense,
+      speed,
+      height,
+      weight,
+      image,
+      types,
+      
+    );
+    res.status(200).send(pokeMon);
+
+    } catch (err) {
+        next(err);
+  }
+});
 
   module.exports = router;

@@ -1,7 +1,7 @@
 const {Pokemon, Type, pokemon_type} = require('../db');
 const axios = require('axios');
 const {urlGetPokemons} = require ('../urls');
-
+//const { v4: uuidv4 } = require('uuid');
 
 const getInfoApi = async () => {
   const infoApi_1 = await axios.get(urlGetPokemons); 
@@ -57,7 +57,10 @@ const getInfoApi = async () => {
     return infoTotal; 
   };
 
+  
 module.exports = {
-	getInfoApi, getAllInfo, getInfoDb,
+	getInfoApi, 
+  getAllInfo, 
+  getInfoDb, 
 };
 
