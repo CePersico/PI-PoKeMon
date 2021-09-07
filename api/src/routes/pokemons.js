@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {Pokemon, Type} = require('../db');
 const axios = require('axios');
-const { getAllInfo} = require('../controllers/pokemon');
+const { getAllInfo, clonePoke} = require('../controllers/pokemon');
 const { v4: uuidv4 } = require('uuid');
 
 //   - [ ] __GET /pokemons__:
@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
     const name  = req.query.name; 
     try {
         const dataPokemons = await getAllInfo(); 
-        console.log('dataApi 1', dataPokemons);
+        //console.log('dataApi 1', dataPokemons);
             if (name) {
                 const namePokemon = dataPokemons.filter((e) =>
                 e.name.toLowerCase().includes(name.toLowerCase())
@@ -26,7 +26,7 @@ router.get("/", async (req, res, next) => {
             } else {
       
                 const dataPokemons = await getAllInfo();
-                console.log('dataApi 2',dataPokemons)
+                //console.log('dataApi 2',dataPokemons)
                 res.status(200).json(dataPokemons);
             }
     } catch(err) {
@@ -81,79 +81,41 @@ router.get("/:id", async (req, res, next) => {
 //   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de pokemons por body
 //   - Crea un pokemon en la base de datos
 
-const clonePokemon = async (
-  name,
-  hp,
-  attack,
-  defense,
-  speed,
-  height,
-  weight,
-  image,
-  types,
-  createInDb
-) => {
-  try {
-    const id = uuidv4();
-    const cloneNewPoke = await Pokemon.create({
-      name: name,
-      createdInDb: createInDb,
-      hp: hp,
-      attack: attack,
-      defense: defense,
-      speed: speed,
-      height: height,
-      weight: weight,
-      image: image,
-      id: id
-    });
 
-    const typeDb = await Type.findAll({
-      where: { name: types },
-    });
-
-    await cloneNewPoke.addTypes(typeDb);
-    return cloneNewPoke;
-  } catch (err) {
-    console.log(err);
-  }
-}
 
 router.post("/", async (req, res, next) => {
   const {
     name,
-    createInDb,
-    hp,
     attack,
+    hp,    
     defense,
     speed,
     height,
     weight,
-    image,
+    sprite,
     types,
+    createInDb
   } = req.body;
 
-  //res.json(req.body);
-
   try {
-    const pokeMon = await clonePokemon(
+    const cloneP = await clonePoke(
       name,
-      createInDb,
-      hp,
       attack,
+      hp,    
       defense,
       speed,
       height,
       weight,
-      image,
+      sprite,
       types,
-      
+      createInDb
     );
-    res.status(200).send(pokeMon);
-
+    //console.log(cloneP)
+    res.status(200).send('PoKemon clonated');
     } catch (err) {
-        next(err);
+    next(err);
   }
 });
+
 
   module.exports = router;

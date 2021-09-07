@@ -1,7 +1,7 @@
 const {Pokemon, Type, pokemon_type} = require('../db');
 const axios = require('axios');
 const {urlGetPokemons} = require ('../urls');
-//const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const getInfoApi = async () => {
   const infoApi_1 = await axios.get(urlGetPokemons); 
@@ -24,7 +24,7 @@ const getInfoApi = async () => {
                       speed: e.stats[5].base_stat,
                       height: e.height,
                       weight: e.weight,
-                      sprite: e.sprites.other.dream_world.front_default || e.sprites["official-artwork"].front_default,
+                      sprite: e.sprites.other.dream_world.front_default ,
                       types: e.types.length === 1 ? [{name :e.types[0].type.name}] : [{name :e.types[0].type.name}, {name :e.types[1].type.name}]
                 })
               })
@@ -33,7 +33,7 @@ const getInfoApi = async () => {
       return pokemons;
   } catch (err) {
       next(err);
-      console.log(err);
+      //console.log(err);
   }
 };
 
@@ -53,14 +53,53 @@ const getInfoApi = async () => {
     const apiInfo = await getInfoApi(); 
     const dbInfo = await getInfoDb();
     const infoTotal = dbInfo.concat(apiInfo);
-    console.log('infoTotal:', infoTotal);
+    //console.log('infoTotal:', infoTotal);
     return infoTotal; 
   };
 
+  const clonePoke = async (
+    name,
+    attack,
+    hp,    
+    defense,
+    speed,
+    height,
+    weight,
+    sprite,
+    types,
+    createInDb
+  ) => {
+    try {
+      const id = uuidv4();
+      const cloneNewPoke = await Pokemon.create({
+        name,
+        attack,
+        hp,    
+        defense,
+        speed,
+        height,
+        weight,
+        sprite,
+        createInDb,
+        id: id
+      });
+  
+      const typesDb = await Type.findAll({
+        where: { name: types },
+      });
+  
+      await cloneNewPoke.addType(typesDb);
+      return cloneNewPoke;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
   
 module.exports = {
 	getInfoApi, 
   getAllInfo, 
   getInfoDb, 
+  clonePoke
 };
 
