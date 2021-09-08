@@ -110,7 +110,7 @@ router.post("/", async (req, res, next) => {
       types,
       createInDb
     );
-    //console.log(cloneP)
+    console.log( 'poke creado:',cloneP)
     res.status(200).send('PoKemon clonated');
     } catch (err) {
     next(err);

@@ -4,9 +4,9 @@ import {
     FILTER_CREATED, 
     ORDER_BY_NAME, 
     ORDER_BY_ATTACK, 
-    // GET_POKE_BY_NAME, 
-    // GET_TYPES, 
-    // POST_POKEMON, 
+    GET_POKE_BY_NAME, 
+    GET_TYPES, 
+    POST_POKEMON, 
     // GET_DETAILS 
 } from "../actions";
 
@@ -115,25 +115,25 @@ export default function rootReducer (state = initialState, action) {
             ...state,
             pokemons: arrOrderAt
         } 
-//         case GET_TEMP:
-//             return {
-//                 ...state, 
-//                 temperaments: action.payload
-//             } 
-//         case POST_DOG:
-//             return {
-//                 ...state, 
-//             }
-//         case GET_DOG_BY_NAME:
-//             return {
-//                 ...state,
-//                 dogs: action.payload
-//             }  
-//         case GET_DETAILS:
-//             return {
-//                 ...state,
-//                 details: action.payload
-//             } 
+        case GET_TYPES:
+            return {
+                ...state, 
+                types: action.payload
+            } 
+        case POST_POKEMON:
+            return {
+                ...state, 
+            }
+        case GET_POKE_BY_NAME:
+            return {
+                ...state,
+                pokemons: action.payload
+            }  
+        // case GET_DETAILS:
+        //     return {
+        //         ...state,
+        //         details: action.payload
+        //     } 
         default:
                return state; 
     }

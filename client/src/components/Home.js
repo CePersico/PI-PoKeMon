@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { getPokemons, filterPokemonsByType, filterCreated, orderByName, orderByAttack } from '../actions';
 import Card from './Card';
 import Paginado from './Paginado';
-//import SearchBar from './SearchBar';
+import SearchBar from './SearchBar';
 //import style from './Home.module.css';
 
 
@@ -14,7 +14,7 @@ export default function Home() {
 const dispatch = useDispatch();  // para ir despachand las acciones
 const allPokemons = useSelector ((state) => state.pokemons);  // allPokemons: arreglo del estado, me trae del reducer el estado pokemons(me trae todos los pokemons)
 // Es equivalente al mapStatetoProps
-const typeList = useSelector(state => state.types)
+const types = useSelector(state => state.types)
 
 // definiendo estados locales (useState). 
 
@@ -69,7 +69,7 @@ function handleOrderAttack (e) {
         <Link to = '/pokemons'>Create a new PoKemon</Link>
         <h1>API Pokemon</h1>
         <button onClick = {e => {handleClick (e)}}>Repeat load</button>
-        {/*  <SearchBar/>*/}        
+        <SearchBar/>        
            <div>       
             <select onChange= { e=> handleOrderName(e) } >
                 <option value="DEFAULT" disabled selected>Choose Order Name</option>
@@ -87,13 +87,13 @@ function handleOrderAttack (e) {
                 <option value ='Created'>Created</option>
                 <option value ='Existent'>Existent</option>
             </select>
-            {/* <select className="form-select" name='select' onChange= {e => handleFilterType(e)}>
-                   {typeList && typeList.map(type =>  (
-                       <option key={type} value={type}>{type}</option>
+            <select className="form-select" name='select' onChange= {e => handleFilterType(e)}>
+                    <option value="DEFAULT" disabled selected>Choose Types</option>
+                   {types && types.map(t =>  (
+                       <option key={t.name} value={t.name}>{t.name}</option>
                    ))}
-            </select> */}
-
-            <select onChange = {e => handleFilterType(e)}>
+            </select>  
+            {/* <select onChange = {e => handleFilterType(e)}> 
                 <option value="DEFAULT" disabled selected>Choose Types</option>
                 <option value ='All'>All</option>
                 <option value ='Normal'>Normal</option>
@@ -116,7 +116,8 @@ function handleOrderAttack (e) {
                 <option value ='Fairy'>Fairy</option>
                 <option value ='Unknow'>Unknow</option>
                 <option value ='Shadow'>Shadow</option>
-            </select>
+            </select> */}
+            {/* <input type="reset" value="Restaurar"/> */}
             <div >
             <Paginado 
                     pokesForPage = {pokesForPage} 
@@ -127,7 +128,7 @@ function handleOrderAttack (e) {
                 return (
                     <fragment >
                          <Link to ={'/home'+ e.id}>
-                            <Card id={e.id} name = {e.name} sprite = {e.sprite}  types={e.types.map(t => <h3 key={t.id}>{t.name}</h3>)}/>
+                            <Card id={e.id} name = {e.name} sprite = {e.sprite} types={e.types.map(t => <h3 key={t.id}>{t.name}</h3>)} />
                         </Link>
                     </fragment>
                     
