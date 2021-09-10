@@ -1,12 +1,34 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import {postPokemon, getTypes, getPokemons} from '../actions';
+import {postPokemon, getTypes } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import style from './PokeCreated.module.css'
+
+function validate(input) {
+    let errors = {};
+    if(!input.name) {
+        errors.name = 'The name is required!';
+    } else if (!input.hp) {
+        errors.hp = 'The hp is required!';
+    } else if (!input.attack) {
+        errors.attack = 'The attack is required!';
+    } else if (!input.defense) {
+        errors.defense = 'The defense is required!';
+    } else if (!input.speed) {
+        errors.speed = 'The speed is required!';
+    } else if (!input.height) {
+        errors.height = 'The height is required!';
+    } else if (!input.weight) {
+        errors.weight = 'The weight is required!';
+    }
+    return errors;
+};
 
 export default function PokeCreated() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const types = useSelector(e => e.types)
+    const types = useSelector(e => e.types);
+    const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         name:'',
         hp:'',
@@ -23,13 +45,17 @@ export default function PokeCreated() {
 
     useEffect(() => {
         dispatch(getTypes());
-    }, [])
+    }, [dispatch])
 
 function handleInputChange(e) {
         setInput({
             ...input,
             [e.target.name]: e.target.value
-        }); 
+        });
+        setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+        })); 
         console.log(input);      
     }
 function handleSelect(e) {
@@ -55,8 +81,15 @@ function handleSubmit(e) {
         height:'',
         weight:'' 
     });
-    history.push('/pokemons')
+    history.push('/home')
 };
+
+function handleDeleteType(e) {
+    setInput({
+        ...input,
+        types: input.types.filter(t => t !== e )
+    })
+}
 
     return (
         <div>
@@ -69,8 +102,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.name}
                         name = 'name'
-                        onChange = {handleInputChange}
+                        onChange ={e => {handleInputChange(e)}}
                     />
+                    {errors.name && (
+                        <p className = {style.error}>{errors.name}</p>
+                    )}
                 </div>
                 <div>
                     <label>hp:</label>
@@ -78,8 +114,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.hp}
                         name = 'hp'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {errors.hp && (
+                        <p className = {style.error}>{errors.hp}</p>
+                    )}
                 </div>
                 <div>
                     <label>Attack:</label>
@@ -87,8 +126,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.attack}
                         name = 'attack'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {errors.attack && (
+                        <p className = {style.error}>{errors.attack}</p>
+                    )}
                 </div>
                 <div>    
                     <label>Image:</label>
@@ -96,8 +138,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.spirit}
                         name = 'spirit'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {/* {errors.name && (
+                        <p>{errors.name}</p>
+                    )} */}
                 </div>
                 
                 <div>
@@ -106,8 +151,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.defense}
                         name = 'defense'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {errors.defense && (
+                        <p className = {style.error}>{errors.defense}</p>
+                    )}
                 </div>
                 <div>
                     <label>Speed:</label>
@@ -115,8 +163,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.speed}
                         name = 'speed'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {errors.speed && (
+                        <p className = {style.error}>{errors.speed}</p>
+                    )}
                 </div>
                 <div>
                     <label>Height:</label>
@@ -124,8 +175,11 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.height}
                         name = 'height'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {errors.height && (
+                        <p className = {style.error}>{errors.height}</p>
+                    )}
                 </div>
                 <div>
                     <label>Weight:</label>
@@ -133,19 +187,22 @@ function handleSubmit(e) {
                         type ='text'
                         value = {input.weight}
                         name = 'weight'
-                        onChange = {handleInputChange}
+                        onChange = {e => {handleInputChange(e)}}
                     />
+                    {errors.weight && (
+                        <p className = {style.error}>{errors.weight}</p>
+                    )}
                 </div>
                 <div>
                     <label>Types:</label>
-                    <select onChange={handleSelect} multiple required>
+                    <select onChange={e => {handleSelect(e)}}  required>
                         <option value="DEFAULT" disabled selected >Choose types</option>
                             {types && types.map(type =>  (
                                     <option key={type.name} value={type.name}>
                                         {type.name}
                                     </option>
                             ))}
-                         <ul><li>{input.types.map(e => e.name + ',')}</li></ul>                       
+                           
                     </select> 
                    {/*  <select onChange={handleSelect} multiple required>
                    holding down the Ctrl key (control) can select more than one option ... (use CTRL to choose more than one)
@@ -175,6 +232,12 @@ function handleSubmit(e) {
                 </div>  
                 <button type = 'submit'>Create a New Pokemon</button>         
             </form>
+            {input.types.map(e =>
+                <div>
+                    <p>{e}</p>
+                    <button onClick = {e => {handleDeleteType(e)}}>X</button>
+                </div>
+            )}
         </div>
     )
 }

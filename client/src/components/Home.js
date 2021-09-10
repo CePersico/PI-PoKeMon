@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getPokemons, filterPokemonsByType, filterCreated, orderByName, orderByAttack } from '../actions';
+import { getPokemons, filterPokemonsByType, filterCreated, orderByName, orderByAttack, getTypes } from '../actions';
 import Card from './Card';
 import Paginado from './Paginado';
 import SearchBar from './SearchBar';
@@ -32,6 +32,9 @@ const paginado = (numberPage) => {  // la usare en el renderizado
      setCurrentPage(numberPage);  // seteamos la pag. en ese num de pag
 }
 
+useEffect(() => {
+    dispatch(getTypes());
+}, [dispatch])
 
 useEffect(() => {   // traer del state los dogs cuandso el componente se monta..
     dispatch(getPokemons())   // es equivalente al mapDispatchtoProps
@@ -127,8 +130,8 @@ function handleOrderAttack (e) {
                 { currentPokes?.map((e) => {
                 return (
                     <fragment >
-                         <Link to ={'/home'+ e.id}>
-                            <Card id={e.id} name = {e.name} sprite = {e.sprite} types={e.types.map(t => <h3 key={t.id}>{t.name}</h3>)} />
+                         <Link to ={'/details/'+ e.id}>
+                            <Card id={e.id} name = {e.name} sprite = {e.sprite}  types={e.types.map(t => <h3 key={t.id}>{t.name}</h3>)}/>
                         </Link>
                     </fragment>
                     

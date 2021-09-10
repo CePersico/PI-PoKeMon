@@ -7,7 +7,7 @@ import {
     GET_POKE_BY_NAME, 
     GET_TYPES, 
     POST_POKEMON, 
-    // GET_DETAILS 
+    GET_DETAILS 
 } from "../actions";
 
     const initialState = {
@@ -129,11 +129,11 @@ export default function rootReducer (state = initialState, action) {
                 ...state,
                 pokemons: action.payload
             }  
-        // case GET_DETAILS:
-        //     return {
-        //         ...state,
-        //         details: action.payload
-        //     } 
+        case GET_DETAILS:
+            return {
+                ...state,
+                details: action.payload
+            } 
         default:
                return state; 
     }

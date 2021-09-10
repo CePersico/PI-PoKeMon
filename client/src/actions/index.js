@@ -3,7 +3,7 @@ import axios from 'axios';
 export const GET_POKEMONS = "GET_POKEMONS";
 export const GET_POKE_BY_NAME = 'GET_POKE_BY_NAME';
 export const GET_TYPES = 'GET_TYPES';
-// export const GET_DETAILS = 'GET_DETAILS';
+export const GET_DETAILS = 'GET_DETAILS';
 export const FILTER_BY_TYPES = "FILTER_BY_TYPES";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
@@ -60,19 +60,20 @@ export function getTypes() {  // esta accion despacha la ruta del Back que trae 
     }
 }
 
-// export function getDetails(id) {
-//     return async function(dispatch) {
-//         try {
-//             var json = await axios.get('http://localhost:3001/pokemons/' + id);
-//             return dispatch({
-//                 type: GET_DETAILS,
-//                 payload: json.data
-//             })
-//         } catch(error) {
-//             console.log(error)
-//         }
-//     }
-// }
+export function getDetails(id) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.get('http://localhost:3001/pokemons/' + id);
+            return dispatch({
+                type: GET_DETAILS,
+                payload: json.data
+            })
+        } catch(error) {
+            console.log(error)
+        }
+    }
+}
+
 
 
 export function filterPokemonsByType(payload) {

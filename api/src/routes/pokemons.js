@@ -68,7 +68,7 @@ router.get("/:id", async (req, res, next) => {
           height: dataApiForId.data.height,
           weight: dataApiForId.data.weight,          
           type: dataApiForId.data.types.map((el) => el.type.name),
-          image: dataApiForId.data.sprites.other.dream_world.front_default||dataApiForId.data.sprites.other["official-artwork"].front_default,
+          sprite: dataApiForId.data.sprites.other.dream_world.front_default||dataApiForId.data.sprites.other["official-artwork"].front_default,
         };
         res.json(infoPokeForId); 
       }
