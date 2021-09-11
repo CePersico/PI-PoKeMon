@@ -4,7 +4,7 @@ import style from './Paginado.module.css';
 
 export default function Paginado ({pokesForPage, allPokemons, paginado}) {
     const numbersPage = [];
-    for (let i = 1; Math.ceil(allPokemons/pokesForPage) +1 > i; i++ ) {   // si allPokemons.length = 181 y pokesForPage = 9 ----+ math.ceil(181/9) =21
+    for (let i = 1; Math.ceil(allPokemons/pokesForPage) +1 > i; i++ ) {   // si allPokemons.length = 40 y pokesForPage = 9 ----+ math.ceil(40/9) = 5
         numbersPage.push(i);   // genero un array con los numeros de las paginas
     }
     // numbersPage = [ 1, 2, ....., 20, 21]

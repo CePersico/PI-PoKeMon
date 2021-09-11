@@ -20,10 +20,10 @@ const types = useSelector(state => state.types)
 
 const [order, setOrder] = useState(' ');
 const [currentPage, setCurrentPage] = useState(1); // la pag arranca en 1 ( currentPage: pagina actual, setCurrentPage: para setear la pag. actual)
-const [pokesForPage, setPokesForPage] = useState(10); //cada pag. mostrara 9 pokemons
+const [pokesForPage, setPokesForPage] = useState(9); //cada pag. mostrara 9 pokemons
 const lastPokeForPage = currentPage*pokesForPage;  // 9---18---27---36 (numero del ultimo pokemon de la pag.)
 // pag. 1: 1 -----9  pag. 2: 10----18   ---
-const firstPokeForPage = lastPokeForPage - pokesForPage + 1;   // 9 - 9 + 1 = 1  numero del primer poke de la pag.
+const firstPokeForPage = lastPokeForPage - pokesForPage ;   // 9 - 9 + 1 = 1  numero del primer poke de la pag.
 const currentPokes = allPokemons.slice(firstPokeForPage, lastPokeForPage)  // distribuye pokes por pagina del primero al ultimo
 // currentPokes: pokemons que estan en la pag. actual; con el .slice() tomo una porcion del array allPokemons.
 // son los pokemons que se renderizaran segun la pagina en la que estoy
@@ -57,7 +57,7 @@ function handleOrderName(e) {
     e.preventDefault();
     dispatch(orderByName(e.target.value))  // accedo a los value de cada option que esta en el select
     setCurrentPage(1);  // setea la pag. ppal ( cuando hago el ordenamiento.. set¿eala en la primera)
-    setOrder(`Ordenado ${e.target.value}`)  // clave para que me renderice el nuevo orden. Estadlo local donde el renderizado es la lista ordenada
+    setOrder(`Ordenado ${e.target.value}`)  // clave para que me renderice el nuevo orden. Estado local donde el renderizado es la lista ordenada
 }  // me indica en que orden renderizar
 
 function handleOrderAttack (e) {
@@ -96,31 +96,6 @@ function handleOrderAttack (e) {
                        <option key={t.name} value={t.name}>{t.name}</option>
                    ))}
             </select>  
-            {/* <select onChange = {e => handleFilterType(e)}> 
-                <option value="DEFAULT" disabled selected>Choose Types</option>
-                <option value ='All'>All</option>
-                <option value ='Normal'>Normal</option>
-                <option value ='Fighting'>Fighting</option> 
-                <option value ='Flying'>Flying</option>
-                <option value ='Poison'>Poison</option>
-                <option value ='Ground'>Ground</option>
-                <option value ='Bug'>Bug</option> 
-                <option value ='Ghost'>Ghost</option>
-                <option value ='Fire'>Fire</option>
-                <option value ='Ice'>Ice</option>
-                <option value ='Rock'>Rock</option> 
-                <option value ='Water'>Water</option>
-                <option value ='Steel'>Steel</option> 
-                <option value ='Grass'>Grass</option>
-                <option value ='Electric'>Electric</option>
-                <option value ='Psychic'>Psychic</option>
-                <option value ='Dragon'>Dragon</option> 
-                <option value ='Dark'>Dark</option>
-                <option value ='Fairy'>Fairy</option>
-                <option value ='Unknow'>Unknow</option>
-                <option value ='Shadow'>Shadow</option>
-            </select> */}
-            {/* <input type="reset" value="Restaurar"/> */}
             <div >
             <Paginado 
                     pokesForPage = {pokesForPage} 

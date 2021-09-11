@@ -60,6 +60,7 @@ router.get("/:id", async (req, res, next) => {
         const dataApiForId = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`); 
   
         const infoPokeForId = {
+          id: dataApiForId.data.id,
           name: dataApiForId.data.name,
           attack: dataApiForId.data.stats[1].base_stat,
           hp: dataApiForId.data.stats[0].base_stat,

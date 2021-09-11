@@ -5,37 +5,41 @@
     
     export default function Details(props) {
         const {id} = useParams();
-        console.log(id);
+        console.log('id:',id);
         const dispatch = useDispatch();
     useEffect (() => {
         dispatch(getDetails(id))
-    }, [dispatch])
+    }, [id, dispatch])
         const pokeDetail = useSelector((state) => state.details)
-
+        console.log('pokeDetail:',pokeDetail);
+        console.log('long array:',pokeDetail.length)
+        //console.log('name:',pokeDetail[0].name)
     return (
         <div>
-            { pokeDetail.length > 0 ?
                 <div>
-                    <h1>{pokeDetail.name}</h1>
-                    <img src = {pokeDetail.image} alt = 'Not found' width='500px' height='700px'/>
-                    <h5>{pokeDetail.hp}</h5>
-                    <h4>{pokeDetail.speed}</h4>
-                    <h4>{pokeDetail.weight}</h4>
-                    <h4>{pokeDetail.height}</h4>
-                    <h4>{pokeDetail.attack}</h4>
-                    <h4>{pokeDetail.defense}</h4>
-                    <h4>{pokeDetail.height}</h4>
-                    <h4>Types: </h4>
-                    
+                    <h2>Name: {pokeDetail?.name}</h2>
+                    <img src = {pokeDetail?.sprite} alt = 'Not found' width='400px' height='600px'/>
+                    <h4>Hp: {pokeDetail?.hp}</h4>
+                    <h4>Speed: {pokeDetail?.speed}</h4>
+                    <h4>Weight: {pokeDetail?.weight}</h4>
+                    <h4>Height: {pokeDetail?.height}</h4>
+                    <h4>Attack: {pokeDetail?.attack}</h4>
+                    <h4>Defense: {pokeDetail?.defense}</h4>
+                    <h4>Type/s:
+                        {pokeDetail?.length === 1?
+                            pokeDetail?.type[0]:
+                            pokeDetail?.type[0] + ' - ' + pokeDetail?.type[1]}
+                    </h4>
+                    {/* 
                     <h4>{!pokeDetail.createdInDb ?
-                           pokeDetail.types + ' ' :
+                           pokeDetail.types.map(e => e + (' ')) :
                            pokeDetail.type.map(e => e.name + (' '))
                         }
-                    </h4> 
+                    </h4>   */}
 
-                </div> :
-                <p>Loading...</p>
-            }
+                </div> 
+                
+            
             <Link to = '/home'>
                 <button>Back</button>
             </Link>
