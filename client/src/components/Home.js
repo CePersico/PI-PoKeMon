@@ -108,7 +108,7 @@ function handleOrderAttack (e) {
                 return (
                     <fragment >
                          <Link to ={'/details/'+ e.id}>
-                            <Card className = {style.name} id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} types={e.types.map(t => <h2 key={t.id}>{t.name}</h2>)}/>
+                            <Card className = {style.name} id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} /* types={e.types.map(t => <h2 key={t.id}>{t.name}</h2>)} *//>
                         </Link>
                     </fragment>
                     
