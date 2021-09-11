@@ -81,10 +81,59 @@ router.get("/:id", async (req, res, next) => {
 // - [ ] __POST /pokemons__:
 //   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de pokemons por body
 //   - Crea un pokemon en la base de datos
+/* router.post('/', (req, res) => {
+  const {name, image, episodes} = req.body
 
+  Character.create({
+      id: uuidv4(),
+      name,
+      image
+  })
+  .then(createdCharacter => {
+      return createdCharacter.setEpisodes(episodes)
+  })
+  .then((characterWithEpisodes) => {
+      res.json(characterWithEpisodes)
+  })
+  .catch(error => next(error))
+}) */
+ router.post("/", async (req, res, next) => {
+        
+    const {
+        name, 
+        hp, 
+        attack, 
+        defense, 
+        speed, 
+        height, 
+        weight, 
+        sprite, 
+        types,
+        createInDb
+    } = req.body
 
-
-router.post("/", async (req, res, next) => {
+    Pokemon.create({
+      id: uuidv4(),
+      name, 
+      hp, 
+      attack, 
+      defense, 
+      speed, 
+      height, 
+      weight, 
+      sprite,
+      createInDb
+    })
+    .then(createdPoke => {
+        return createdPoke.setTypes(types)   // cuando se agrega un array la tabla va en PLURAL!!
+    })
+    .then((pokeWithTypes) => {
+        res.json(pokeWithTypes)
+    })
+    .catch(error => next(error))
+})
+    
+/* router.post("/", async (req, res, next) => {
   const {
     name,
     attack,
@@ -99,7 +148,7 @@ router.post("/", async (req, res, next) => {
   } = req.body;
 
   try {
-    const cloneP = await clonePoke(
+    const cloneP = await Pokemon.create({
       name,
       attack,
       hp,    
@@ -110,13 +159,13 @@ router.post("/", async (req, res, next) => {
       sprite,
       types,
       createInDb
-    );
+    });
     console.log( 'poke creado:',cloneP)
     res.status(200).send('PoKemon clonated');
     } catch (err) {
     next(err);
   }
 });
-
+ */
 
   module.exports = router;

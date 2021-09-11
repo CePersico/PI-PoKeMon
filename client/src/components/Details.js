@@ -7,10 +7,12 @@
         const {id} = useParams();
         console.log('id:',id);
         const dispatch = useDispatch();
+        const pokeDetail = useSelector((state) => state.details)
+
     useEffect (() => {
         dispatch(getDetails(id))
     }, [id, dispatch])
-        const pokeDetail = useSelector((state) => state.details)
+        
         console.log('pokeDetail:',pokeDetail);
         console.log('long array:',pokeDetail.length)
         //console.log('name:',pokeDetail[0].name)
@@ -25,10 +27,10 @@
                     <h4>Height: {pokeDetail?.height}</h4>
                     <h4>Attack: {pokeDetail?.attack}</h4>
                     <h4>Defense: {pokeDetail?.defense}</h4>
-                    <h4>Type/s:
-                        {pokeDetail?.length === 1?
-                            pokeDetail?.type[0]:
-                            pokeDetail?.type[0] + ' - ' + pokeDetail?.type[1]}
+                    <h4>Type/s: {pokeDetail.type?.map(e => e + ' - ')}
+                       {/*  {pokeDetail?.length === 1?
+                            ' ' + pokeDetail?.type[0]:
+                            ' ' + pokeDetail?.type[0] + ' - ' + pokeDetail?.type[1]} */}
                     </h4>
                     {/* 
                     <h4>{!pokeDetail.createdInDb ?

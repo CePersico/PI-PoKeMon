@@ -28,9 +28,10 @@ border-left: 1px solid #CCCCCC; */
 
 .pagination {
 list-style:none;
+text-align: center ;
 display: flex;
 flex-direction:row;
- margin-top: 50px;
+margin-top: 50px;
 margin-left: 320px;
 width: 500px;
 height: 70px;

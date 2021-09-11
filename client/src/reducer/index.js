@@ -25,35 +25,21 @@ export default function rootReducer (state = initialState, action) {
                  ...state,
                  pokemons: action.payload,
                  allPokemons: action.payload
-            } 
+            }
         case FILTER_BY_TYPES:
-            const allPokemons = state.allPokemons
-            const pokeWithTypes = allPokemons.map(p => {
-                return {...p, types: p.types.map(e => e.name.toLowerCase())}  // ver como accado al type!!
-            })
-            console.log('pokeWithTypes:', pokeWithTypes);   // types es un array que tiene los tipos
-            // const pokesFilter =  pokeWithTypes.filter((e) => {
-            //     return e.types?.includes(action.payload)
-            //   }); 
-
-              const pokesFilterFirst = action.payload === 'All' ? allPokemons :
-                                    state.allPokemons.filter(i => i.types[0] === action.payload.toLowerCase() )
-              const pokesFilterSecond = action.payload === 'All' ? allPokemons :
-                                    state.allPokemons.filter(i => i.types[1] === action.payload.toLowerCase() )
-
-            console.log('pokesFilterFirst:', pokesFilterFirst)
-            console.log('pokesFilterSecond:', pokesFilterSecond)
+            let allPokemons = state.allPokemons;
+                                         
+            const filterPoke = action.payload === "All" ? 
+                                allPokemons : 
+                                allPokemons.filter(e => {
+                    return e.types?.map(e => e.name).includes(action.payload);
+                });            
             return {
                 ...state,
-                pokemons: pokesFilterFirst || pokesFilterSecond
-            }
-            // la logica en el reducer va antes de return!!
-        //     const allPokemons = state.allPokemons;  // para acceder a los pokemons en el reducer==) usar STATE
-        //     const typeFiltered = allPokemons.filter(e => e.types === action.payload)  // en payload llega el value de cada option
-        //  return {
-        //         ...state,
-        //         pokemons: typeFiltered 
-        //     }
+                pokemons: filterPoke,
+            }; 
+               
+        
         case FILTER_CREATED:
         const createdFilter = action.payload === 'Created' ? 
                                     state.allPokemons.filter(e => e.createdInDb) : 

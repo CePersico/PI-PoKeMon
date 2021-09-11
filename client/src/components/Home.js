@@ -6,7 +6,7 @@ import { getPokemons, filterPokemonsByType, filterCreated, orderByName, orderByA
 import Card from './Card';
 import Paginado from './Paginado';
 import SearchBar from './SearchBar';
-//import style from './Home.module.css';
+import style from './Home.module.css';
 
 
 export default function Home() {
@@ -68,7 +68,7 @@ function handleOrderAttack (e) {
 }  // me indica en que orden renderizar
 
     return (        
-    <div>
+    <div className = {style.containerHome}>
         <Link to = '/pokemons'>Create a new PoKemon</Link>
         <h1>API Pokemon</h1>
         <button onClick = {e => {handleClick (e)}}>Repeat load</button>
@@ -92,9 +92,10 @@ function handleOrderAttack (e) {
             </select>
             <select className="form-select" name='select' onChange= {e => handleFilterType(e)}>
                     <option value="DEFAULT" disabled selected>Choose Types</option>
-                   {types && types.map(t =>  (
-                       <option key={t.name} value={t.name}>{t.name}</option>
-                   ))}
+                    <option value='All'>All</option>
+                {types && types.map(t =>  (
+                    <option key={t.name} value={t.name}>{t.name}</option>
+                ))}
             </select>  
             <div >
             <Paginado 
@@ -102,16 +103,18 @@ function handleOrderAttack (e) {
                     allPokemons = {allPokemons.length} 
                     paginado = {paginado}
                 />
+                <div className = {style.container}>
                 { currentPokes?.map((e) => {
                 return (
                     <fragment >
                          <Link to ={'/details/'+ e.id}>
-                            <Card id={e.id} name = {e.name} sprite = {e.sprite}  types={e.types.map(t => <h3 key={t.id}>{t.name}</h3>)}/>
+                            <Card className = {style.name} id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} types={e.types.map(t => <h2 key={t.id}>{t.name}</h2>)}/>
                         </Link>
                     </fragment>
                     
                     );
                 })}
+                </div>
             </div>    
                 <Paginado 
                     pokesForPage = {pokesForPage} 
