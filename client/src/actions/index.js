@@ -11,7 +11,6 @@ export const ORDER_BY_ATTACK = 'ORDER_BY_ATTACK';
 export const POST_POKEMON = 'POST_POKEMON';
 
 
-
 export function getPokemons() {
     return async function(dispatch) {
         const json = await axios.get('http://localhost:3001/pokemons', {  // me traigo el get del Back( con la ruta que en el BACK trae todos los Pokemons)
@@ -117,8 +116,14 @@ export function postPokemon(payload) {
         return res;
     }
 };
-
-
-
-
+// VERRR
+const BUSCARPOKEEXACT = 'BUSCARPOKEEXACT';
+export function buscarpokeexact(namee){
+    return(dispatch)=>{
+        axios.get('http://localhost:3001/pokemons?namee=' + namee)
+        .then(response=>{
+            dispatch({type:BUSCARPOKEEXACT,payload:response.data})
+        })
+    }
+}
 

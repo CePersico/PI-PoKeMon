@@ -20,10 +20,10 @@ const types = useSelector(state => state.types)
 
 const [order, setOrder] = useState(' ');
 const [currentPage, setCurrentPage] = useState(1); // la pag arranca en 1 ( currentPage: pagina actual, setCurrentPage: para setear la pag. actual)
-const [pokesForPage, setPokesForPage] = useState(9); //cada pag. mostrara 9 pokemons
-const lastPokeForPage = currentPage*pokesForPage;  // 9---18---27---36 (numero del ultimo pokemon de la pag.)
-// pag. 1: 1 -----9  pag. 2: 10----18   ---
-const firstPokeForPage = lastPokeForPage - pokesForPage ;   // 9 - 9 + 1 = 1  numero del primer poke de la pag.
+const [pokesForPage, setPokesForPage] = useState(12); //cada pag. mostrara 9 pokemons
+const lastPokeForPage = currentPage === 1 ? (currentPage*pokesForPage) - 3 : (currentPage*pokesForPage) - 3;  // 9---18---27---36 (numero del ultimo pokemon de la pag.)
+// pag. 1: 1 -----9  pag. 2: 10----21   --- 22 --- 33---
+const firstPokeForPage = currentPage === 1 ? lastPokeForPage - pokesForPage + 3 : lastPokeForPage - pokesForPage;   // 9 - 9 + 1 = 1  numero del primer poke de la pag.
 const currentPokes = allPokemons.slice(firstPokeForPage, lastPokeForPage)  // distribuye pokes por pagina del primero al ultimo
 // currentPokes: pokemons que estan en la pag. actual; con el .slice() tomo una porcion del array allPokemons.
 // son los pokemons que se renderizaran segun la pagina en la que estoy
@@ -108,7 +108,7 @@ function handleOrderAttack (e) {
                 return (
                     <fragment >
                          <Link to ={'/details/'+ e.id}>
-                            <Card className = {style.name} id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} /* types={e.types.map(t => <h2 key={t.id}>{t.name}</h2>)} *//>
+                            <Card className = {style.name} id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} types={e.types?.map(t => <h2 key={t.id}>{t.name}</h2>)}/>
                         </Link>
                     </fragment>
                     

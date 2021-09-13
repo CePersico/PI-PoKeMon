@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import {postPokemon, getTypes } from '../actions';
+import {postPokemon, getTypes, getPokemons } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './PokeCreated.module.css'
 
@@ -20,7 +20,19 @@ function validate(input) {
         errors.height = 'The height is required!';
     } else if (!input.weight) {
         errors.weight = 'The weight is required!';
-    }
+    } /* else if (/[0-9]/.test(input.hp)) {
+        errors.hp = 'The hp is a number!';
+    } else if (/[0-9]/.test(input.attack)) {
+        errors.attack = 'The attack is a number';
+    } else if (/[0-9]/.test(input.defense)) {
+        errors.defense = 'The defense is a number';
+    } else if (/[0-9]/.test(input.speed)) {
+        errors.speed = 'The speed is a number!';
+    } else if (/[0-9]/.test(input.height)) {
+        errors.height = 'The height is a number!';
+    } else if (/[0-9]/.test(input.weight)) {
+        errors.weight = 'The weight is a number!';
+    } */
     return errors;
 };
 
@@ -38,25 +50,27 @@ export default function PokeCreated() {
         defense: '',
         speed:'',
         height:'',
-        weight:''        
+        weight:'',
+        disabled : true    // deshabilita el boton      
     });
 
     //const type = useSelector(state => state.type)
 
     useEffect(() => {
         dispatch(getTypes());
-    }, [dispatch])
+    }, [])
 
 function handleInputChange(e) {
         setInput({
             ...input,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            disabled: errors.name? true : false
         });
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
         })); 
-        console.log(input);      
+        //console.log(input);      
     }
 function handleSelect(e) {
     setInput({
@@ -68,20 +82,26 @@ function handleSelect(e) {
 function handleSubmit(e) {
     e.preventDefault();
     console.log(input);
-    dispatch(postPokemon(input))
-    alert("Pokemon created!")
-    setInput({
-        name:'',
-        hp:'',
-        attack:'',
-        spirit:'',
-        types: [], 
-        defense: '',
-        speed:'',
-        height:'',
-        weight:'' 
-    });
-    history.push('/home')
+    if (Object.values(errors).length !== 0) {
+        alert('complete all required data')
+    } else {
+        dispatch(postPokemon(input))
+        alert("Pokemon created!")
+        setInput({
+            name:'',
+            hp:'',
+            attack:'',
+            spirit:'',
+            types: [], 
+            defense: '',
+            speed:'',
+            height:'',
+            weight:'',
+            disabled : true 
+        });
+        dispatch(getPokemons())
+        history.push('/home')
+    }    
 };
 
 function handleDeleteType(e) {
@@ -90,28 +110,29 @@ function handleDeleteType(e) {
         types: input.types.filter(t => t !== e )
     })
 }
-
     return (
         <div>
-            <Link to = '/home'><button>Back</button></Link>
+            <Link to = '/home'><button>Back Home</button></Link>
             <h1>Create the New Pokemon</h1>
             <form onSubmit={e => {handleSubmit(e)}}>
                 <div>
-                    <label>Name:</label>
+                    <label htmlFor = 'name'>Name:</label>
                     <input
                         type ='text'
+                        id = 'name'
                         value = {input.name}
                         name = 'name'
-                        onChange ={e => {handleInputChange(e)}}
+                        onChange = {e => {handleInputChange(e)}}
                     />
                     {errors.name && (
                         <p className = {style.error}>{errors.name}</p>
                     )}
                 </div>
                 <div>
-                    <label>hp:</label>
+                    <label htmlFor = 'hp'>hp:</label>
                     <input
                         type ='text'
+                        id = 'hp'
                         value = {input.hp}
                         name = 'hp'
                         onChange = {e => {handleInputChange(e)}}
@@ -121,9 +142,10 @@ function handleDeleteType(e) {
                     )}
                 </div>
                 <div>
-                    <label>Attack:</label>
+                    <label htmlFor = 'attack'>Attack:</label>
                     <input
                         type ='text'
+                        id = 'attack'
                         value = {input.attack}
                         name = 'attack'
                         onChange = {e => {handleInputChange(e)}}
@@ -133,9 +155,10 @@ function handleDeleteType(e) {
                     )}
                 </div>
                 <div>    
-                    <label>Image:</label>
+                    <label htmlFor = 'img'>Image:</label>
                     <input
                         type ='text'
+                        id = 'img'
                         value = {input.spirit}
                         name = 'spirit'
                         onChange = {e => {handleInputChange(e)}}
@@ -146,9 +169,10 @@ function handleDeleteType(e) {
                 </div>
                 
                 <div>
-                    <label>Defense:</label>
+                    <label htmlFor = 'defense'>Defense:</label>
                     <input
                         type ='text'
+                        id = 'defense'
                         value = {input.defense}
                         name = 'defense'
                         onChange = {e => {handleInputChange(e)}}
@@ -158,9 +182,10 @@ function handleDeleteType(e) {
                     )}
                 </div>
                 <div>
-                    <label>Speed:</label>
+                    <label htmlFor = 'speed'>Speed:</label>
                     <input
                         type ='text'
+                        id = 'speed'
                         value = {input.speed}
                         name = 'speed'
                         onChange = {e => {handleInputChange(e)}}
@@ -170,9 +195,10 @@ function handleDeleteType(e) {
                     )}
                 </div>
                 <div>
-                    <label>Height:</label>
+                    <label htmlFor = 'height'>Height:</label>
                     <input
                         type ='text'
+                        id = 'height'
                         value = {input.height}
                         name = 'height'
                         onChange = {e => {handleInputChange(e)}}
@@ -182,9 +208,10 @@ function handleDeleteType(e) {
                     )}
                 </div>
                 <div>
-                    <label>Weight:</label>
+                    <label htmlFor = 'weight'>Weight:</label>
                     <input
                         type ='text'
+                        id = 'weight'
                         value = {input.weight}
                         name = 'weight'
                         onChange = {e => {handleInputChange(e)}}
@@ -194,7 +221,7 @@ function handleDeleteType(e) {
                     )}
                 </div>
                 <div>
-                    <label>Types:</label>
+                    <label htmlFor = 'types'>Types:</label>
                     <select onChange={e => {handleSelect(e)}}  required>
                         <option value="DEFAULT" disabled selected >Choose types</option>
                             {types && types.map(type =>  (

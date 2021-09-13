@@ -21,6 +21,7 @@
                 <div>
                     <h2>Name: {pokeDetail?.name}</h2>
                     <img src = {pokeDetail?.sprite} alt = 'Not found' width='400px' height='600px'/>
+                    <h4>Id: {pokeDetail?.id}</h4>
                     <h4>Hp: {pokeDetail?.hp}</h4>
                     <h4>Speed: {pokeDetail?.speed}</h4>
                     <h4>Weight: {pokeDetail?.weight}</h4>
