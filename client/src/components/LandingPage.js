@@ -8,7 +8,7 @@ export default function LandingPage() {
         <div className = {style.container}>
             <h1 className = {style.title}>Welcome to Poket Monster</h1> 
             <Link to = '/home'> 
-                <button>Start</button>
+                <button>Enter</button>
             </Link>
             <div>
                 <img className = { style.sep } src ='https://www.fondoswiki.com/Uploads/fondoswiki.com/ImagenesGrandes/criaturas-pokemon.jpg' alt =' img not found' width='900px' height='auto' />

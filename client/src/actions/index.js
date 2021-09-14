@@ -116,14 +116,3 @@ export function postPokemon(payload) {
         return res;
     }
 };
-// VERRR
-const BUSCARPOKEEXACT = 'BUSCARPOKEEXACT';
-export function buscarpokeexact(namee){
-    return(dispatch)=>{
-        axios.get('http://localhost:3001/pokemons?namee=' + namee)
-        .then(response=>{
-            dispatch({type:BUSCARPOKEEXACT,payload:response.data})
-        })
-    }
-}
-

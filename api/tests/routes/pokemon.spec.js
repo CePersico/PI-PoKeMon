@@ -22,3 +22,58 @@ describe('Pokemon routes', () => {
     );
   });
 });
+
+// Test de mas rutas:
+
+describe('Details Pokemon routes', () => {
+  before(() => conn.authenticate()
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  }));
+  beforeEach(() => Pokemon.sync({ force: true })
+    .then(() => Pokemon.create(pokemon)));
+  describe('GET /pokemons/:id', () => {
+    it('should get 200', () =>
+      agent.get('/pokemons/98').expect(200)
+      .expect('Content-Type', /json/)
+    );
+  });
+});
+
+
+describe('Types routes', () => {
+  before(() => conn.authenticate()
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  }));
+  beforeEach(() => Pokemon.sync({ force: true })
+    .then(() => Pokemon.create(pokemon)));
+  describe('GET /types', () => {
+    it('should get 200', () =>
+      agent.get('/types')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function(res) {expect(Array.isArray(res.body)).to.eql(true);
+        })
+      );
+  });
+});
+
+describe('Post Pokemon routes', () => {
+  before(() => conn.authenticate()
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  }));
+  beforeEach(() => Pokemon.sync({ force: true })
+    .then(() => Pokemon.create(pokemon)));
+  describe('POST /pokemons', () => {
+    it('should get 200', () =>
+      agent.post('/pokemons').send(pokemon)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function(res) {
+          expect(res.body.name).to.eql('testPost');
+        })
+    );
+  });
+});

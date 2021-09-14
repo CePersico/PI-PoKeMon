@@ -25,6 +25,9 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
+    sprite: {
+      type: DataTypes.STRING,
+    },
     attack: {
       type: DataTypes.INTEGER,
     },

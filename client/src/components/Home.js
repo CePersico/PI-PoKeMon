@@ -69,7 +69,7 @@ function handleOrderAttack (e) {
 
     return (        
     <div className = {style.containerHome}>
-        <Link to = '/pokemons'>Create a new PoKemon</Link>
+        <Link to = '/pokemon'>Create a New PoKeMon</Link>
         <h1>API Pokemon</h1>
         <button onClick = {e => {handleClick (e)}}>Repeat load</button>
         <SearchBar/>        
@@ -107,8 +107,8 @@ function handleOrderAttack (e) {
                 { currentPokes?.map((e) => {
                 return (
                     <fragment >
-                         <Link to ={'/details/'+ e.id}>
-                            <Card className = {style.name} id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} types={e.types?.map(t => <h2 key={t.id}>{t.name}</h2>)}/>
+                         <Link to ={'/details/'+ e.id} className = {style.name}>
+                            <Card  id={e.id} name = {e.name} sprite = {e.sprite}  attack = {e.attack} types={e.types?.map(t => <h2 key={t.id}>{t.name}</h2>)}/>
                         </Link>
                     </fragment>
                     

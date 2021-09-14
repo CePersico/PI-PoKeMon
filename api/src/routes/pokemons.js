@@ -115,12 +115,12 @@ router.get("/:id", async (req, res, next) => {
     Pokemon.create({
       id: uuidv4(),
       name, 
-      hp, 
-      attack, 
-      defense, 
-      speed, 
-      height, 
-      weight, 
+      hp: parseInt(hp), 
+      attack: parseInt(attack), 
+      defense: parseInt(defense), 
+      speed: parseInt(speed), 
+      height: parseInt(height), 
+      weight: parseInt(weight), 
       sprite,
       createInDb
     })
