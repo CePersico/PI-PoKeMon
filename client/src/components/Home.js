@@ -17,7 +17,7 @@ const allPokemons = useSelector ((state) => state.pokemons);  // allPokemons: ar
 const types = useSelector(state => state.types)
 
 // definiendo estados locales (useState). 
-
+// 1 const [currentPoke, setCurrentP] = useState(' ');
 const [order, setOrder] = useState(' ');
 const [currentPage, setCurrentPage] = useState(1); // la pag arranca en 1 ( currentPage: pagina actual, setCurrentPage: para setear la pag. actual)
 const [pokesForPage, setPokesForPage] = useState(12); //cada pag. mostrara 9 pokemons
@@ -31,6 +31,10 @@ const currentPokes = allPokemons.slice(firstPokeForPage, lastPokeForPage)  // di
 const paginado = (numberPage) => {  // la usare en el renderizado
      setCurrentPage(numberPage);  // seteamos la pag. en ese num de pag
 }
+// 2 useEffect(() => {
+
+//     setCurrentP(allPokemons.slice(firstPokeForPage, lastPokeForPage))      
+// }, [allPokemons, currentPage])
 
 useEffect(() => {
     dispatch(getTypes());
@@ -69,9 +73,11 @@ function handleOrderAttack (e) {
 
     return (        
     <div className = {style.containerHome}>
-        <Link to = '/pokemon'>Create a New PoKeMon</Link>
-        <h1>API Pokemon</h1>
-        <button onClick = {e => {handleClick (e)}}>Repeat load</button>
+        <Link to = '/pokemon' className = {style.name}>
+                <button className = {style.btnClone}>Clone the PoKeMon</button>
+        </Link>
+        <h1 className = {style.title}>API Pokemon</h1>
+        <button onClick = {e => {handleClick (e)}} className = {style.btn}>Reload</button>
         <SearchBar/>        
            <div>       
             <select onChange= { e=> handleOrderName(e) } >

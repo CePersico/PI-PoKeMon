@@ -23,6 +23,7 @@ router.get('/', async (req, res, next) => {
         })
     })
     const allTypes = await Type.findAll();
+    
     return res.status(200).send(allTypes)
     } catch(err) {
         next(err);

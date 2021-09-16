@@ -1,3 +1,48 @@
 .error {
     color: rgb(255, 0, 0);
 }
+
+.types {
+    display: grid;
+    grid-template-columns: 90% 10%;
+   justify-content: space-evenly;
+    
+}
+
+.btnBack{   
+    display: block;
+    width: 75px;
+    height: 50px;
+    border-radius: 50%; 
+    margin: auto; 
+    display: block;
+    background-color: rgb(53, 197, 17);
+}
+.btn{   
+    display: block;
+    width: 60px;
+    height: 40px;
+    border-radius: 70%; 
+    margin: auto; 
+    display: block;
+    background-color: rgb(179, 90, 164);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #00de7e;
+    background-image: linear-gradient(275deg, #00de7e 0%, #4900ff 100%);
+
+}
+
+.home {
+    color:rgb(85, 8, 79);
+    bottom:2px;
+    font-family:monospace;
+    font-size: 26px;
+    text-decoration: none;
+
+}

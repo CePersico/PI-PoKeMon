@@ -40,9 +40,29 @@ router.get("/", async (req, res, next) => {
 //   - Debe traer solo los datos pedidos en la ruta de detalle de pokemon
 //   - Tener en cuenta que tiene que funcionar tanto para un id de un pokemon existente en pokeapi o uno creado por ustedes
 
+
+
 router.get("/:id", async (req, res, next) => {
     const id = req.params.id; 
+    if(!id) {
+      return next({msg: 'Is not an Id', status: 500})
+    }   
     try {
+      // if(typeof id === 'string' && id.length > 10) {
+      //   pokemon = await Pokemon.findByPk(id, {
+      //       include: Type
+      //   })
+      //   pokemon = {
+      //           id: pokemon.id,
+      //           name: pokemon.name,
+      //           sprite: pokemon.sprite,
+      //           types: pokemon.Types.map((type) => {
+      //               return {
+      //                   id: type.id,
+      //                   name: type.name
+      //               }
+      //           })
+      //       }
       if (id.length > 10) { 
         const pokemonId = await Pokemon.findOne({
           where: { id: id }, 
@@ -56,6 +76,7 @@ router.get("/:id", async (req, res, next) => {
         });
       
         return res.status(200).send(pokemonId); 
+
       } else {  
         const dataApiForId = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`); 
   
@@ -81,91 +102,41 @@ router.get("/:id", async (req, res, next) => {
 // - [ ] __POST /pokemons__:
 //   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de pokemons por body
 //   - Crea un pokemon en la base de datos
-/* router.post('/', (req, res) => {
-  const {name, image, episodes} = req.body
 
-  Character.create({
-      id: uuidv4(),
-      name,
-      image
-  })
-  .then(createdCharacter => {
-      return createdCharacter.setEpisodes(episodes)
-  })
-  .then((characterWithEpisodes) => {
-      res.json(characterWithEpisodes)
-  })
-  .catch(error => next(error))
-}) */
- router.post("/", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
         
-    const {
-        name, 
-        hp, 
-        attack, 
-        defense, 
-        speed, 
-        height, 
-        weight, 
-        sprite, 
-        types,
-        createInDb
-    } = req.body
-
-    Pokemon.create({
-      id: uuidv4(),
-      name, 
-      hp: parseInt(hp), 
-      attack: parseInt(attack), 
-      defense: parseInt(defense), 
-      speed: parseInt(speed), 
-      height: parseInt(height), 
-      weight: parseInt(weight), 
-      sprite,
-      createInDb
-    })
-    .then(createdPoke => {
-        return createdPoke.setTypes(types)   // cuando se agrega un array la tabla va en PLURAL!!
-    })
-    .then((pokeWithTypes) => {
-        res.json(pokeWithTypes)
-    })
-    .catch(error => next(error))
-})
-    
-/* router.post("/", async (req, res, next) => {
   const {
-    name,
-    attack,
-    hp,    
-    defense,
-    speed,
-    height,
-    weight,
-    sprite,
-    types,
-    createInDb
-  } = req.body;
-
-  try {
-    const cloneP = await Pokemon.create({
-      name,
-      attack,
-      hp,    
-      defense,
-      speed,
-      height,
-      weight,
-      sprite,
+      name, 
+      hp, 
+      attack, 
+      defense, 
+      speed, 
+      height, 
+      weight, 
+      sprite, 
       types,
       createInDb
-    });
-    console.log( 'poke creado:',cloneP)
-    res.status(200).send('PoKemon clonated');
-    } catch (err) {
-    next(err);
-  }
-});
- */
+  } = req.body
 
+  Pokemon.create({
+    id: uuidv4(),
+    name, 
+    hp, 
+    attack, 
+    defense, 
+    speed, 
+    height, 
+    weight, 
+    sprite,
+    createInDb
+  })
+  .then(createdPoke => {
+    createdPoke.setTypes(types)   
+    })
+  .then((pokeWithTypes) => {
+    console.log(pokeWithTypes)
+    res.json(pokeWithTypes)
+  })
+  .catch(error => next(error))
+})
   module.exports = router;

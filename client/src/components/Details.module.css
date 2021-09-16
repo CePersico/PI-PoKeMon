@@ -1,0 +1,23 @@
+.container {
+    min-height: 100vh;
+    background-color: #a518ab;
+    background-image: linear-gradient(92deg, #a518ab 0%, #ebb737 100%);
+
+}
+
+.pokedetail {
+    margin: auto;
+    
+}
+.btn {
+    margin-top: 2vw;
+    background-color: #daa521;
+    border:rgb(32, 35, 37);
+    width: 20vw;
+    height: 30px;
+    font-size: 1.5vw;
+    color: #530505;
+    border-radius: 0.5vw;
+    font-weight: bold;
+    cursor: pointer;
+  }

@@ -5,11 +5,47 @@
 }
 
 .containerHome {
-    background-color: #FBAB7E;
-    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
-    
+    background-color: #a518ab;
+    background-image: linear-gradient(92deg, #a518ab 0%, #ebb737 100%);    
 }
 
 .name {
     text-decoration: none;
 }
+
+.title {
+    font-style: oblique;
+}
+
+.btn {
+    margin-top: 2vw;
+    background-color: #1114c0;
+    border: none;
+    height: 30px;
+    font-size: 2vw;
+    color: #c1a9d6;
+    border-radius: 0.5vw;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btnClone{   
+    display: block;
+    width: 100px;
+    height: 70px;
+    border-radius: 70%; 
+    margin: auto; 
+    display: block;
+    background-color: rgb(104, 52, 187);
+    
+}
+/* 
+.btn {   
+    display: block;
+    justify-content: center;
+    width: 60px;
+    height: 30px;
+    border-radius: 50%; 
+    margin: auto; 
+    display: block;
+    background-color: rgb(15, 19, 224);
+} */

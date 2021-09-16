@@ -2,6 +2,7 @@
     import {Link, useParams} from 'react-router-dom'
     import { useDispatch, useSelector } from "react-redux";
     import { getDetails } from "../actions";
+    import style from './Details.module.css'
     
     export default function Details(props) {
         const {id} = useParams();
@@ -17,10 +18,13 @@
         console.log('long array:',pokeDetail.length)
         //console.log('name:',pokeDetail[0].name)
     return (
-        <div>
-                <div>
+        <div className = {style.container}>
+            <Link to = '/home'>
+                <button className = {style.btn}>Back</button>
+            </Link>
+                <div className = {style.pokedetail}>
                     <h2>Name: {pokeDetail?.name}</h2>
-                    <img src = {pokeDetail?.sprite} alt = 'Not found' width='400px' height='600px'/>
+                    <img src = {pokeDetail?.sprite} alt = 'Not found' width='300px' height='500px'/>
                     <h4>Id: {pokeDetail?.id}</h4>
                     <h4>Hp: {pokeDetail?.hp}</h4>
                     <h4>Speed: {pokeDetail?.speed}</h4>
@@ -28,23 +32,16 @@
                     <h4>Height: {pokeDetail?.height}</h4>
                     <h4>Attack: {pokeDetail?.attack}</h4>
                     <h4>Defense: {pokeDetail?.defense}</h4>
-                    <h4>Type/s: {pokeDetail.type?.map(e => e + ' - ')}
-                       {/*  {pokeDetail?.length === 1?
-                            ' ' + pokeDetail?.type[0]:
-                            ' ' + pokeDetail?.type[0] + ' - ' + pokeDetail?.type[1]} */}
-                    </h4>
+                    <h4>Type/s: {pokeDetail.type?.map(e => e + ' - ')}</h4>
                     {/* 
                     <h4>{!pokeDetail.createdInDb ?
                            pokeDetail.types.map(e => e + (' ')) :
                            pokeDetail.type.map(e => e.name + (' '))
                         }
                     </h4>   */}
-
-                </div> 
-                
-            
+                </div>             
             <Link to = '/home'>
-                <button>Back</button>
+                <button className = {style.btn}>Back</button>
             </Link>
          </div>
     )

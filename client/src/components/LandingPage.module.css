@@ -11,4 +11,19 @@
 
 .title {
     font-style: oblique;
+    margin: 15px;
+    padding: auto;
+}
+
+.btn {   
+    display: block;
+    width: 75px;
+    height: 50px;
+    border-radius: 50%; 
+    margin: auto; 
+    display: block;
+    background-color: rgb(240, 217, 9);
+}
+.text {
+    text-decoration: none;
 }
