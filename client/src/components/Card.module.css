@@ -2,3 +2,25 @@
     font-style: inherit;
     text-decoration:none;
 }
+
+.efectolupa { cursor: pointer; }
+
+.efectolupa img:hover {
+    filter: brightness(50%);
+    -webkit-filter: brightness(50%);
+}
+
+.efectolupa:after {
+   content: '\f002';
+    position: relative;
+    color: #ccc;
+    width: 30px;
+    height: 30px;
+    bottom: 59px;
+    left: 458px; 
+    font-family: FontAwesome;
+    font-style: normal;
+    opacity: 0.8;
+    font-size: 18px;
+}
+ 
